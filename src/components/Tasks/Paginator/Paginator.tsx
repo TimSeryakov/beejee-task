@@ -21,47 +21,44 @@ export const Paginator = () => {
     const paginationArr = []
 
     if (currentPage <= 3) {
-        for (let i = 1; i <= maxPagesQty; i++) {
+        for (let i = 1; i <= currentPage + 2; i++) {
             paginationArr.push(i)
         }
-
-    } else if (currentPage >= totalTasksQty - 2) {
-        for (let i = totalTasksQty - 4; i <= totalTasksQty; i++) {
-            paginationArr.push(i)
-        }
-
-    } else {
+    } else if (maxPagesQty - currentPage >= 3) {
         for (let i = currentPage - 2; i <= currentPage + 2; i++) {
+            paginationArr.push(i)
+        }
+    } else {
+        for (let i = currentPage - 2; i <= maxPagesQty; i++) {
             paginationArr.push(i)
         }
     }
 
-
     return (
         <div className="container my-10">
             <nav className="mx-auto h-28 bg-gb-dark-medium rounded-2xl flex items-center justify-center px-3">
-            {!isLoaded &&
-            <div className="hidden sm:block mr-3 w-6"/>} {/* для симметрии */}
+                {!isLoaded &&
+                <div className="hidden sm:block mr-3 w-6"/>} {/* для симметрии */}
 
-            {
-                paginationArr.map(pageNumber => {
-                        return (
-                            <PaginationLink key={pageNumber}
-                                            active={pageNumber === currentPage}
-                                            onClick={() => {
-                                                setCurrentPage(pageNumber)
-                                            }}
+                {
+                    paginationArr.map(pageNumber => {
+                            return (
+                                <PaginationLink key={pageNumber}
+                                                active={pageNumber === currentPage}
+                                                onClick={() => {
+                                                    setCurrentPage(pageNumber)
+                                                }}
 
-                            >
-                                {pageNumber}
-                            </PaginationLink>
-                        )
-                    }
-                )
-            }
+                                >
+                                    {pageNumber}
+                                </PaginationLink>
+                            )
+                        }
+                    )
+                }
 
-            {!isLoaded &&
-            <div className="hidden sm:block ml-3 w-6"><PreloaderCircle/></div>}
+                {!isLoaded &&
+                <div className="hidden sm:block ml-3 w-6"><PreloaderCircle/></div>}
             </nav>
         </div>
 

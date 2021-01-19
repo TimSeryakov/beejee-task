@@ -72,7 +72,7 @@ export const loginTC = (email: string, password: string): ThunkDispatchType => (
             if (res.data.status === "ok" && res.data.message.token) {
                 dispatch(setUserTokenAC(res.data.message.token))
                 saveTokenToLocalStorage(res.data.message.token) // WARNING Not safe!
-                dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.LOGIN_SUCCESS, "success"))
+                dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.LOGIN_SUCCESS, "info"))
             } else {
                 dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.LOGIN_ERROR, "error"))
             }

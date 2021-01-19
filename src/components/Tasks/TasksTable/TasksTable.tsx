@@ -133,7 +133,15 @@ const SmartColumnHeader = (props: SmartColumnHeaderPropsType) => {
 const TableRow = (props: TableRowPropsType) => {
     return (
         <tr>
-            <td className="restricted">{props.title}</td>
+            <td className="restricted relative">
+                {props.title}
+                {
+                    props.title.slice(-1) === "᠎" &&
+                    <span className="bg-blue-900 text-blue-500 text-xs px-3 py-1 rounded-br-md absolute top-0 left-0">
+                        Edited
+                    </span>
+                }
+            </td>
             <td>{props.userName}</td>
             <td>{props.email}</td>
             <td className="">
@@ -204,11 +212,13 @@ const Active = () => {
     )
 }
 
-function EditLink(props: { taskId: number, isAuthorized: boolean }) {
+const EditLink = (props: { taskId: number, isAuthorized: boolean }) => {
     if (props.isAuthorized) {
         return (
-            <Link to={`/edit/${props.taskId}`} className="">
-                <svg className="w-10 h-10 mt-5 mx-auto text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            <Link to={`/edit/${props.taskId}`}>
+                <svg className="w-10 h-10 mt-5 mx-auto text-indigo-500 hover:opacity-70"
+                     fill="none" stroke="currentColor"
+                     viewBox="0 0 24 24"
                      xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                           d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">

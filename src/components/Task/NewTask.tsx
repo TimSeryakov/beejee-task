@@ -12,7 +12,7 @@ export const NewTask = () => {
     const dispatch = useDispatch()
 
 
-    if (notification && notification.type === "success") {
+    if (notification && notification.type === "info") {
         return <Redirect to="/tasks"/>
     }
 
@@ -71,6 +71,7 @@ export const NewTask = () => {
                             <textarea name="text"
                                       ref={register({required: true,  maxLength: 280})}
                                       aria-invalid={errors.text ? "true" : "false"}
+                                      rows={10}
                                       className="form-input mt-1 block w-full border-2 border-gb-dark-soft focus:outline-none
                                                  bg-gb-dark-hard px-3 py-1 rounded-md"
                             />

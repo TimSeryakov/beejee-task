@@ -150,7 +150,7 @@ export const requestTasksDataTC = (): ThunkDispatchType => (dispatch, getState) 
                 throw new Error()
             }
         })
-        .catch(error => {
+        .catch(() => {
             dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.GET_TASKS_ERROR, "error"))
         })
         .finally(() => {
@@ -158,20 +158,19 @@ export const requestTasksDataTC = (): ThunkDispatchType => (dispatch, getState) 
         })
 }
 
-
-export const createTasksTC = (username: string, email: string, text: string): ThunkDispatchType => (dispatch, getState) => {
+export const createTasksTC = (username: string, email: string, text: string): ThunkDispatchType => (dispatch) => {
 
     dispatch(setTasksDataLoadedAC(false))
 
     return TASKS_API.createTask(username, email, text)
         .then(res => {
             if (res.status === +200) {
-                dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.ADD_SUCCESS, "success"))
+                dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.ADD_SUCCESS, "info"))
             } else {
                 throw new Error()
             }
         })
-        .catch(error => {
+        .catch(() => {
             dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.GET_TASKS_ERROR, "error"))
         })
         .finally(() => {
@@ -189,12 +188,12 @@ export const editTasksTC = (id: number, status: boolean, text: string): ThunkDis
     return TASKS_API.editTask(id, statusCode, text, token)
         .then(res => {
             if (res.status === +200) {
-                dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.EDIT_SUCCESS, "success"))
+                dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.EDIT_SUCCESS, "info"))
             } else {
                 throw new Error()
             }
         })
-        .catch(error => {
+        .catch(() => {
             dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.EDIT_TASKS_ERROR, "error"))
         })
         .finally(() => {

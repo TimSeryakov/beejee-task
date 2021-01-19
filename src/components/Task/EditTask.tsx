@@ -51,7 +51,7 @@ const EditTask = (props: EditTaskPropsType) => {
 // Redirections
 //----------------------------------------------------------------------------------------------------------------------
 
-    if (notification && notification.type === "success") {
+    if (notification && notification.type === "info") {
         return <Redirect to="/tasks"/>
     }
 
@@ -109,6 +109,7 @@ const EditTask = (props: EditTaskPropsType) => {
                             </label>
                             <textarea name="text"
                                       value={taskText}
+                                      rows={10}
                                       onChange={(e) => setTaskText(e.currentTarget.value)}
                                       ref={register({required: true,  maxLength: 280})}
                                       aria-invalid={errors.text ? "true" : "false"}

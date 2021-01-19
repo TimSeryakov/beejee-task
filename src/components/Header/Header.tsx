@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {RootStateType} from "../../redux/store"
 import {saveTokenToLocalStorage} from "../../api/localStorage/localStorage";
 import {setUserTokenAC} from "../../redux/auth-reducer";
+import {NOTIFICATION_MESSAGES, setNotificationMessageAC} from "../../redux/notification-reducer";
 
 export const Header = () => {
     const {isAuthorized} = useSelector((state: RootStateType) => state.auth)
@@ -12,6 +13,7 @@ export const Header = () => {
     const logout = () => {
         saveTokenToLocalStorage("")
         dispatch(setUserTokenAC(""))
+        dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.LOGOUT_SUCCESS, "info"))
 
     }
 

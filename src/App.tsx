@@ -43,6 +43,7 @@ export const App = () => {
 
             <div className="container">
                 <Switch>
+                    <Route exact path={'/'} render={() => <Tasks/>}/>
                     <Route exact path={'/tasks'} render={() => <Tasks/>}/>
                     <Route exact path={'/new'} render={() => <NewTask/>}/>
                     <Route exact path={'/login'} render={() => <Login/>}/>
