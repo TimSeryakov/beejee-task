@@ -1,11 +1,11 @@
 import React, {useCallback, useEffect} from 'react'
 import './TasksTable.css'
-import {RootStateType} from "../../../redux/store";
-import {useDispatch, useSelector} from 'react-redux';
-import {setSortByAC, SortDirectionType, toggleSortDirectionAC} from "../../../redux/app-reducer";
-import {requestTasksDataTC} from "../../../redux/task-reducer";
-import {Preloader} from "../../common/Preloader/Preloader";
-import {Link} from 'react-router-dom';
+import {RootStateType} from "../../../redux/store"
+import {useDispatch, useSelector} from 'react-redux'
+import {setSortByAC, SortDirectionType, toggleSortDirectionAC} from "../../../redux/app-reducer"
+import {requestTasksDataTC, setCurrentPageAC} from "../../../redux/task-reducer"
+import {Preloader} from "../../common/Preloader/Preloader"
+import {Link} from 'react-router-dom'
 
 
 export const TasksTable = () => {
@@ -16,6 +16,11 @@ export const TasksTable = () => {
     const {sortBy, sortDirection} = useSelector(appSelector)
     const {isAuthorized} = useSelector(authSelector)
     const dispatch = useDispatch()
+
+    // Reset to 1
+    useEffect(() => {
+        dispatch(setCurrentPageAC(1))
+    }, [])
 
     useEffect(() => {
         dispatch(requestTasksDataTC())

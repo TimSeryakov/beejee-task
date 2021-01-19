@@ -15,7 +15,7 @@ export const PaginationLink: FC<PaginationLinkPropsType> = (
 
     const style = `${active ? 'px-6 py-4' : 'py-3'} 
                  inline-block px-5 mx-2 border-2 text-gb-text text-xl rounded-md border-gb-text 
-                 hover:text-gb-light hover:border-gb-light focus:outline-none`
+                 hover:text-gb-light hover:border-gb-light focus:outline-none select-none`
     return (
         <button className={style} {...restProps}/>
     )
