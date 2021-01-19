@@ -1,0 +1,36 @@
+thead > tr > th {
+  @apply pb-5
+}
+
+thead > tr > th:nth-child(1) {
+  @apply w-7/12
+}
+
+tbody > tr > td {
+  @apply text-center
+}
+
+tbody > tr > td:nth-child(1) {
+  @apply text-left pr-2
+}
+
+tbody > tr > td {
+  @apply py-5 px-5
+}
+
+tbody > tr > td {
+  @apply py-10
+}
+
+tbody > tr:nth-child(odd) {
+  @apply bg-gb-dark-soft
+}
+
+/*Hides some cols on small screen size */
+/*thead > tr > th:nth-child(n+2):nth-child(-n+4) {*/
+/*  @apply hidden md:table-cell*/
+/*}*/
+
+/*tbody > tr > td:nth-child(n+2):nth-child(-n+4) {*/
+/*  @apply hidden md:table-cell*/
+/*}*/
