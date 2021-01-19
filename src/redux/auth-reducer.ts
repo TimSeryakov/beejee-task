@@ -2,9 +2,14 @@
 // Init State
 // ---------------------------------------------------------------------------------------------------------------------
 
+import {ThunkDispatchType} from "./store";
+import {AUTH_API} from "../api/api";
+import {NOTIFICATION_MESSAGES, setNotificationMessageAC} from "./notification-reducer";
+import {saveTokenToLocalStorage} from "../api/localStorage/localStorage";
+
 export const initialState: AuthStateType = {
     isAuthorized: false,
-    userID: ""
+    userToken: ""
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -13,7 +18,7 @@ export const initialState: AuthStateType = {
 
 export type AuthStateType = {
     isAuthorized: boolean
-    userID: string
+    userToken: string
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -21,14 +26,14 @@ export type AuthStateType = {
 // ---------------------------------------------------------------------------------------------------------------------
 
 export type AuthActionTypes =
-    | ReturnType<typeof setUserIDAC>
+    | ReturnType<typeof setUserTokenAC>
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Enum as const
 // ---------------------------------------------------------------------------------------------------------------------
 
 enum AUTH {
-    SET_USER_ID = "AUTH/SET_USER_ID"
+    SET_USER_TOKEN = "AUTH/SET_USER_TOKEN"
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -37,11 +42,11 @@ enum AUTH {
 
 const authReducer = (state: AuthStateType = initialState, action: AuthActionTypes): AuthStateType => {
     switch (action.type) {
-        case AUTH.SET_USER_ID: {
+        case AUTH.SET_USER_TOKEN: {
             return {
                 ...state,
-                userID: action.userID,
-                isAuthorized: !!action.userID
+                userToken: action.userToken,
+                isAuthorized: !!action.userToken
             }
         }
         default:
@@ -53,34 +58,29 @@ const authReducer = (state: AuthStateType = initialState, action: AuthActionType
 // Action Creators
 // ---------------------------------------------------------------------------------------------------------------------
 
-export const setUserIDAC = (userID: string) =>
-    ({type: AUTH.SET_USER_ID, userID}) as const
+export const setUserTokenAC = (userToken: string) =>
+    ({type: AUTH.SET_USER_TOKEN, userToken}) as const
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Thunk Creators
 // ---------------------------------------------------------------------------------------------------------------------
 
-// if (res.user) {
-//     dispatch(setUserIDAC(res.user.uid))
-// }
-// export const signinTC = (email: string, password: string): ThunkDispatchType => (dispatch, getState) => {
-//
-//     dispatch(setAppLoadedAC(false))
-//
-//     return AUTH_API.signin(email, password)
-//         .then(res => {
-//             if (res.user) {
-//                 dispatch(setUserIDAC(res.user.uid))
-//                 dispatch(setServerMessageAC(MESSAGES.LOGIN_SUCCESSFUL, "success"))
-//             }
-//         })
-//         .catch(error => {
-//             dispatch(setServerMessageAC(error.message, "error"))
-//         })
-//         .finally(() => {
-//             setAppLoadedAC(true)
-//         })
-// }
+export const loginTC = (email: string, password: string): ThunkDispatchType => (dispatch) => {
+
+    return AUTH_API.login(email, password)
+        .then(res => {
+            if (res.data.status === "ok" && res.data.message.token) {
+                dispatch(setUserTokenAC(res.data.message.token))
+                saveTokenToLocalStorage(res.data.message.token) // WARNING Not safe!
+                dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.LOGIN_SUCCESS, "success"))
+            } else {
+                dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.LOGIN_ERROR, "error"))
+            }
+        })
+        .catch(error => {
+            dispatch(setNotificationMessageAC(error.message, "error"))
+        })
+}
 
 // ---------------------------------------------------------------------------------------------------------------------
 

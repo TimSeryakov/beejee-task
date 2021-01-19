@@ -7,7 +7,7 @@ thead > tr > th {
 }
 
 thead > tr > th:nth-child(1) {
-  @apply w-7/12 truncate
+  @apply w-7/12
 }
 
 tbody > tr > td {
@@ -28,6 +28,10 @@ tbody > tr > td {
 
 tbody > tr:nth-child(odd) {
   @apply bg-gb-dark-soft
+}
+
+.restricted {
+  @apply break-words break-all
 }
 
 /*Hides some cols on small screen size */

@@ -37,8 +37,12 @@ enum NOTIFICATION {
 //
 export enum NOTIFICATION_MESSAGES {
     ADD_SUCCESS = "Task successfully created",
-    ADD_ERROR = "Error while adding",
-    GET_TASKS_ERROR = "Error while requesting tasks!"
+    EDIT_SUCCESS = "Task successfully edited",
+    TASK_ID_ERROR = "There is no such task!",
+    GET_TASKS_ERROR = "Error while requesting tasks!",
+    EDIT_TASKS_ERROR = "Error while updating tasks!",
+    LOGIN_SUCCESS = "You have successfully logged in",
+    LOGIN_ERROR = "Invalid username or password"
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

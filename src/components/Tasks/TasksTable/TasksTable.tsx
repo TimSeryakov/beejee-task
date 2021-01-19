@@ -5,13 +5,16 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setSortByAC, SortDirectionType, toggleSortDirectionAC} from "../../../redux/app-reducer";
 import {requestTasksDataTC} from "../../../redux/task-reducer";
 import {Preloader} from "../../common/Preloader/Preloader";
+import {Link} from 'react-router-dom';
 
 
 export const TasksTable = () => {
     const tasksSelector = useCallback((state: RootStateType) => state.tasks, [])
     const appSelector = useCallback((state: RootStateType) => state.app, [])
+    const authSelector = useCallback((state: RootStateType) => state.auth, [])
     const {tasksData, totalTasksQty, isLoaded, currentPage} = useSelector(tasksSelector)
     const {sortBy, sortDirection} = useSelector(appSelector)
+    const {isAuthorized} = useSelector(authSelector)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -74,10 +77,12 @@ export const TasksTable = () => {
                         {
                             tasksData.map((task) => {
                                 return <TableRow key={task.id}
+                                                 id={task.id}
                                                  title={task.text}
                                                  userName={task.username}
                                                  email={task.email}
                                                  status={task.status}
+                                                 isAdmin={isAuthorized}
                                 />
                             })
                         }
@@ -107,10 +112,12 @@ type SmartColumnHeaderPropsType = {
     showArrow: boolean
 }
 type TableRowPropsType = {
+    id: number
     title: string
     userName: string
     email: string
     status: number
+    isAdmin: boolean
 }
 
 const SmartColumnHeader = (props: SmartColumnHeaderPropsType) => {
@@ -126,10 +133,13 @@ const SmartColumnHeader = (props: SmartColumnHeaderPropsType) => {
 const TableRow = (props: TableRowPropsType) => {
     return (
         <tr>
-            <td>{props.title}</td>
+            <td className="restricted">{props.title}</td>
             <td>{props.userName}</td>
             <td>{props.email}</td>
-            <td>{props.status === 10 ? <Done/> : <Active/>}</td>
+            <td className="">
+                {props.status === 10 ? <Done/> : <Active/>}
+                <EditLink taskId={props.id} isAuthorized={props.isAdmin}/>
+            </td>
         </tr>
     )
 }
@@ -178,7 +188,7 @@ const Arrow = (props: { direction: SortDirectionType }) => {
 const Done = () => {
     return (
         <>
-            <span className="rounded-md px-3 py-2 text-sm bg-green-900 text-green-600">
+            <span className="rounded-md px-3 py-2 text-sm bg-green-900 text-green-600 cursor-default">
                 Done
             </span>
         </>
@@ -187,9 +197,25 @@ const Done = () => {
 const Active = () => {
     return (
         <>
-            <span className="rounded-md px-3 py-2 text-sm bg-purple-900 text-purple-500">
+            <span className="rounded-md px-3 py-2 text-sm bg-purple-900 text-purple-500 cursor-default">
                 Active
             </span>
         </>
     )
+}
+
+function EditLink(props: { taskId: number, isAuthorized: boolean }) {
+    if (props.isAuthorized) {
+        return (
+            <Link to={`/edit/${props.taskId}`} className="">
+                <svg className="w-10 h-10 mt-5 mx-auto text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                    </path>
+                </svg>
+            </Link>
+        )
+    }
+    return null
 }

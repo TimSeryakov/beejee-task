@@ -1,8 +1,6 @@
 import axios from "axios"
 import {SortByType, SortDirectionType} from "../redux/app-reducer"
 import {TaskStatusType} from "../redux/task-reducer"
-import {md5} from 'pure-md5'
-import {encode} from 'uri-utils'
 
 const developer = "tim"
 
@@ -44,21 +42,23 @@ export const TASKS_API = {
 
     },
 
-    editTask(id: number, status: TaskStatusType, text: string) {
+    editTask(id: number, status: TaskStatusType, text: string, token: string) {
         const endPoint = `edit/${id}?developer=${developer}`
-        const signature = md5(`status=${status}&text=${encode(text)}&token=beejee`)
 
         const data = new FormData()
         data.append("status", status.toString())
         data.append("text", text)
-        data.append("token", "TUVZeE9vZGp5OHpMN0R0akhxZUROZ0pOUTE0N0lCVXNldnhwcnNtc1ZaTHJYakZ0TFFVRlRkeVRKL3ZBeW9kUTREY3lKNzAxSkRMWVVoQWF5UkVUQXc9PQ==")
-        data.append("signature", signature)
+        data.append("token", token)
         data.append("mimeType", "multipart/form-data")
 
         return UXAPI.post(endPoint, data)
             .then(res => res)
     }
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// AUTH API
+// ---------------------------------------------------------------------------------------------------------------------
 
 export const AUTH_API = {
     login(userName: string, password: string) {
@@ -71,16 +71,5 @@ export const AUTH_API = {
         return UXAPI.post(endPoint, data)
             .then(res => res)
     }
-
-
-//     if (login.status === 'ok') {
-//     authDispatch({ type: 'LOGIN', user: userName, token: login.message.token });
-//     props.history.push('/');
-// } else {
-//     setAlert('Неправильные реквизиты доступа!');
-//     setDisabled(false);
-// }
-// }
-
 }
 

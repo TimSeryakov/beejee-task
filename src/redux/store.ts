@@ -3,7 +3,7 @@ import logger from "redux-logger"
 import thunkMiddleware, {ThunkAction} from "redux-thunk"
 import appReducer, {AppActionTypes, AppStateType} from "./app-reducer"
 import tasksReducer, {TasksActionTypes, TasksStateType} from "./task-reducer"
-import authReducer, {AuthStateType} from "./auth-reducer"
+import authReducer, {AuthActionTypes, AuthStateType} from "./auth-reducer"
 import notificationReducer, {NotificationActionTypes, NotificationStateType} from "./notification-reducer"
 
 export type RootStateType = {
@@ -19,6 +19,7 @@ export type RootActionsTypes =
     | AppActionTypes
     | TasksActionTypes
     | NotificationActionTypes
+    | AuthActionTypes
 
 const reducers = combineReducers({
     app: appReducer,

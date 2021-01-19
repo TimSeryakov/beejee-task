@@ -1,6 +1,7 @@
 import {ThunkDispatchType} from "./store"
 import {TASKS_API} from "../api/api"
 import {NOTIFICATION_MESSAGES, setNotificationMessageAC} from "./notification-reducer"
+import {booleanAsStatusCode} from "../helpers/statusCodeConverter";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Init State
@@ -172,6 +173,29 @@ export const createTasksTC = (username: string, email: string, text: string): Th
         })
         .catch(error => {
             dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.GET_TASKS_ERROR, "error"))
+        })
+        .finally(() => {
+            dispatch(setTasksDataLoadedAC(true))
+        })
+}
+
+export const editTasksTC = (id: number, status: boolean, text: string): ThunkDispatchType => (dispatch, getState) => {
+    const token = getState().auth.userToken
+
+    const statusCode = booleanAsStatusCode(status)
+
+    dispatch(setTasksDataLoadedAC(false))
+
+    return TASKS_API.editTask(id, statusCode, text, token)
+        .then(res => {
+            if (res.status === +200) {
+                dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.EDIT_SUCCESS, "success"))
+            } else {
+                throw new Error()
+            }
+        })
+        .catch(error => {
+            dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.EDIT_TASKS_ERROR, "error"))
         })
         .finally(() => {
             dispatch(setTasksDataLoadedAC(true))
