@@ -16,8 +16,9 @@ export const Header = () => {
 
                     <Logo/>
 
-                    <li className="px-5"><Link to="/" className="hover:text-gb-light">Tasks</Link></li>
-                    <li className="px-5"><Link to="/" className="hover:text-gb-light">New Task</Link></li>
+                    <li className="px-5"><Link to="/tasks" className="hover:text-gb-light">Tasks</Link></li>
+                    <li className="px-5"><Link to="/test" className="hover:text-gb-light">Test</Link></li>
+                    <li className="px-5"><Link to="/new" className="hover:text-gb-light">New Task</Link></li>
 
                     {
                         isAuthorized ?

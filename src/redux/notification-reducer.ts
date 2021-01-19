@@ -36,8 +36,9 @@ enum NOTIFICATION {
 
 //
 export enum NOTIFICATION_MESSAGES {
-    ADD_SUCCESS = "Successfully added",
-    ADD_ERROR = "Error while adding"
+    ADD_SUCCESS = "Task successfully created",
+    ADD_ERROR = "Error while adding",
+    GET_TASKS_ERROR = "Error while requesting tasks!"
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

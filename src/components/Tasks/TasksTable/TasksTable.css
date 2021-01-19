@@ -1,9 +1,13 @@
+table {
+  @apply min-w-full
+}
+
 thead > tr > th {
   @apply pb-5
 }
 
 thead > tr > th:nth-child(1) {
-  @apply w-7/12
+  @apply w-7/12 truncate
 }
 
 tbody > tr > td {

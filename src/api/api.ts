@@ -51,7 +51,7 @@ export const TASKS_API = {
         const data = new FormData()
         data.append("status", status.toString())
         data.append("text", text)
-        data.append("token", "beejee")
+        data.append("token", "TUVZeE9vZGp5OHpMN0R0akhxZUROZ0pOUTE0N0lCVXNldnhwcnNtc1ZaTHJYakZ0TFFVRlRkeVRKL3ZBeW9kUTREY3lKNzAxSkRMWVVoQWF5UkVUQXc9PQ==")
         data.append("signature", signature)
         data.append("mimeType", "multipart/form-data")
 

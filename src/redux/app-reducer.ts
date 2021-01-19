@@ -28,7 +28,7 @@ export type SortDirectionType = "asc" | "desc"
 export type AppActionTypes =
     | ReturnType<typeof setAppInitializedAC>
     | ReturnType<typeof setSortByAC>
-    | ReturnType<typeof setSortDirectionAC>
+    | ReturnType<typeof toggleSortDirectionAC>
 
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ export type AppActionTypes =
 enum APP {
     SET_APP_INITIALIZED = "APP/SET_APP_INITIALIZED",
     SET_SORT_BY = "APP/SET_SORT_BY",
-    SET_SORT_DIRECTION = "APP/SET_SORT_DIRECTION"
+    TOGGLE_SORT_DIRECTION = "APP/TOGGLE_SORT_DIRECTION"
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -59,10 +59,10 @@ const appReducer = (state: AppStateType = initialState, action: AppActionTypes):
                 sortBy: action.payload.sortBy,
             }
         }
-        case APP.SET_SORT_DIRECTION: {
+        case APP.TOGGLE_SORT_DIRECTION: {
             return {
                 ...state,
-                sortDirection: action.payload.sortOrder,
+                sortDirection: state.sortDirection === "asc" ? "desc" : "asc"
             }
         }
         default:
@@ -80,8 +80,8 @@ export const setAppInitializedAC = (isInitialized: boolean) =>
 export const setSortByAC = (sortBy: SortByType) =>
     ({type: APP.SET_SORT_BY, payload: {sortBy}}) as const
 
-export const setSortDirectionAC = (sortOrder: SortDirectionType) =>
-    ({type: APP.SET_SORT_DIRECTION, payload: {sortOrder}}) as const
+export const toggleSortDirectionAC = () =>
+    ({type: APP.TOGGLE_SORT_DIRECTION}) as const
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Thunk Creators
