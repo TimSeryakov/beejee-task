@@ -1,5 +1,6 @@
 import {ThunkDispatchType} from "./store"
-import {MESSAGES, setServerMessageAC} from "./err-reducer"
+import {TASKS_API} from "../api/api"
+import { setNotificationMessageAC } from "./notification-reducer"
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Init State
@@ -7,7 +8,7 @@ import {MESSAGES, setServerMessageAC} from "./err-reducer"
 
 export const initialState: TasksStateType = {
     isLoaded: false,
-    totalTasksQty: 5,
+    totalTasksQty: 0,
     tasksPerPage: 3,
     currentPage: 1,
     tasksData: [] as TaskDataType[],
@@ -32,8 +33,10 @@ export type TaskDataType = {
     username: string
     email: string
     text: string
-    status: number
+    status: TaskStatusType
 }
+
+export type TaskStatusType = 0 | 10
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Action Creators Types
@@ -41,6 +44,7 @@ export type TaskDataType = {
 
 export type TasksActionTypes =
     | ReturnType<typeof setTasksDataLoadedAC>
+    | ReturnType<typeof setTotalTasksQtyAC>
     | ReturnType<typeof setTasksDataAC>
     | ReturnType<typeof setCurrentTaskDataAC>
 
@@ -51,6 +55,7 @@ export type TasksActionTypes =
 
 enum TASKS {
     SET_TASKS_LOADED = "TASKS/SET_LOADED",
+    SET_TOTAL_TASKS_QTY = "TASKS/SET_TOTAL_TASKS_QTY",
     SET_TASKS_DATA = "TASKS/SET_TASKS_DATA",
     SET_CURRENT_TASK_DATA = "TASKS/SET_CURRENT_TASK_DATA"
 }
@@ -64,19 +69,25 @@ const taskReducer = (state: TasksStateType = initialState, action: TasksActionTy
         case TASKS.SET_TASKS_LOADED: {
             return {
                 ...state,
-                isLoaded: action.isLoaded,
+                isLoaded: action.payload.isLoaded,
+            }
+        }
+        case TASKS.SET_TOTAL_TASKS_QTY: {
+            return {
+                ...state,
+                totalTasksQty: +action.payload.totalTasksQty,
             }
         }
         case TASKS.SET_TASKS_DATA: {
             return {
                 ...state,
-                tasksData: action.tasksData,
+                tasksData: action.payload.tasksData,
             }
         }
         case TASKS.SET_CURRENT_TASK_DATA: {
             return {
                 ...state,
-                currentTaskData: action.taskData,
+                currentTaskData: action.payload.taskData,
             }
         }
         default:
@@ -89,55 +100,48 @@ const taskReducer = (state: TasksStateType = initialState, action: TasksActionTy
 // ---------------------------------------------------------------------------------------------------------------------
 
 export const setTasksDataLoadedAC = (isLoaded: boolean) =>
-    ({type: TASKS.SET_TASKS_LOADED, isLoaded}) as const
+    ({type: TASKS.SET_TASKS_LOADED, payload: {isLoaded}}) as const
+
+export const setTotalTasksQtyAC = (totalTasksQty: number) =>
+    ({type: TASKS.SET_TOTAL_TASKS_QTY, payload: {totalTasksQty}}) as const
 
 export const setTasksDataAC = (tasksData: TaskDataType[]) =>
-    ({type: TASKS.SET_TASKS_DATA, tasksData}) as const
+    ({type: TASKS.SET_TASKS_DATA, payload: {tasksData}}) as const
 
 export const setCurrentTaskDataAC = (taskData: TaskDataType) =>
-    ({type: TASKS.SET_CURRENT_TASK_DATA, taskData}) as const
+    ({type: TASKS.SET_CURRENT_TASK_DATA, payload: {taskData}}) as const
 
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Thunk Creators
 // ---------------------------------------------------------------------------------------------------------------------
 
-// export const requestTasksDataTC = (): ThunkDispatchType => (dispatch, getState) => {
-//     const {searchQuery} = getState().app
-//     const {sortBy} = getState().app
-//     const {sortDirection} = getState().app
-//
-//     dispatch(setTasksDataLoadedAC(false))
-//
-//     return TASKS_API.get(searchQuery, sortBy, sortDirection)
-//         .then(data => {
-//             dispatch(setTasksDataAC(data))
-//         })
-//         .catch(error => {
-//             dispatch(setServerMessageAC(error.message, "error"))
-//         })
-//         .finally(() => {
-//             setTasksDataLoadedAC(true)
-//         })
-// }
-//
-// export const createTaskTC = (): ThunkDispatchType => (dispatch, getState) => {
-//     const {currentTaskData} = getState().tasks
-//     const {userID} = getState().auth
-//
-//     dispatch(setTasksDataLoadedAC(false))
-//
-//     return TASKS_API.add(userID, currentTaskData)
-//         .then(() => { // TODO проверять res
-//             dispatch(setServerMessageAC(MESSAGES.ADD_TASK_SUCCESS, "info"))
-//         })
-//         .catch(error => {
-//             dispatch(setServerMessageAC(error.message, "error"))
-//         })
-//         .finally(() => {
-//             setTasksDataLoadedAC(true)
-//         })
-// }
+export const requestTasksDataTC = (): ThunkDispatchType => (dispatch, getState) => {
+    const {currentPage} = getState().tasks
+    const {sortBy} = getState().app
+    const {sortDirection} = getState().app
+
+    dispatch(setTasksDataLoadedAC(false))
+
+    return TASKS_API.getTasks(currentPage, sortBy, sortDirection)
+        .then(res => {
+            if (res.data.message.status === 200) {
+                dispatch(setTotalTasksQtyAC(res.data.message.total_task_count))
+                dispatch(setTasksDataAC(res.data.message.tasks))
+            } else {
+                throw new Error("Не удалось получить задачи!")
+            }
+        })
+        .catch(error => {
+            // WARNING
+            console.log(error)
+            dispatch(setNotificationMessageAC(error.message, "error"))
+        })
+        .finally(() => {
+            setTasksDataLoadedAC(true)
+        })
+}
+
 
 // ---------------------------------------------------------------------------------------------------------------------
 

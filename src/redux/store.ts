@@ -4,12 +4,12 @@ import thunkMiddleware, {ThunkAction} from "redux-thunk"
 import appReducer, {AppActionTypes, AppStateType} from "./app-reducer"
 import tasksReducer, {TasksActionTypes, TasksStateType} from "./task-reducer"
 import authReducer, {AuthStateType} from "./auth-reducer"
-import errReducer, {ErrActionTypes, ErrStateType} from "./err-reducer"
+import notificationReducer, {NotificationActionTypes, NotificationStateType} from "./notification-reducer"
 
 export type RootStateType = {
     app: AppStateType
     auth: AuthStateType
-    err: ErrStateType
+    notification: NotificationStateType
     tasks: TasksStateType
 }
 
@@ -18,12 +18,12 @@ export type ThunkDispatchType = ThunkAction<void | Promise<void>, RootStateType,
 export type RootActionsTypes =
     | AppActionTypes
     | TasksActionTypes
-    | ErrActionTypes
+    | NotificationActionTypes
 
 const reducers = combineReducers({
     app: appReducer,
     auth: authReducer,
-    err: errReducer,
+    notification: notificationReducer,
     tasks: tasksReducer
 })
 

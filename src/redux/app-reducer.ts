@@ -4,7 +4,7 @@
 
 export const initialState: AppStateType = {
     isInitialized: false,
-    sortBy: "userName",
+    sortBy: "name",
     sortDirection: "asc"
 }
 
@@ -18,7 +18,7 @@ export type AppStateType = {
     sortDirection: SortDirectionType
 }
 
-export type SortByType = "status" | "userName" | "email"
+export type SortByType = "status" | "name" | "email"
 export type SortDirectionType = "asc" | "desc"
 
 // ---------------------------------------------------------------------------------------------------------------------
