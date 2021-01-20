@@ -17,10 +17,10 @@ export const TasksTable = () => {
     const {isAuthorized} = useSelector(authSelector)
     const dispatch = useDispatch()
 
-    // Reset to 1
+    // Reset page to 1
     useEffect(() => {
         dispatch(setCurrentPageAC(1))
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         dispatch(requestTasksDataTC())

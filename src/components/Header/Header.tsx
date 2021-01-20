@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux"
 import {RootStateType} from "../../redux/store"
-import {saveTokenToLocalStorage} from "../../api/localStorage/localStorage";
+import {saveTokenToLocalStorage} from "../../localStorage/localStorage";
 import {setUserTokenAC} from "../../redux/auth-reducer";
 import {NOTIFICATION_MESSAGES, setNotificationMessageAC} from "../../redux/notification-reducer";
 

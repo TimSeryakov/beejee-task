@@ -1,9 +1,9 @@
 import React, {useCallback} from 'react'
-import {RootStateType} from "../../../redux/store";
-import {useDispatch, useSelector} from "react-redux";
-import {PaginationLink} from './PaginationLink';
-import {PreloaderCircle} from "../../common/Preloader/PreloaderCircle";
-import {setCurrentPageAC} from "../../../redux/task-reducer";
+import {RootStateType} from "../../../redux/store"
+import {useDispatch, useSelector} from "react-redux"
+import {PaginationLink} from './PaginationLink'
+import {PreloaderCircle} from "../../common/Preloader/PreloaderCircle"
+import {setCurrentPageAC} from "../../../redux/task-reducer"
 
 
 export const Paginator = () => {

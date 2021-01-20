@@ -43,7 +43,8 @@ export enum NOTIFICATION_MESSAGES {
     EDIT_TASKS_ERROR = "Error while updating tasks!",
     LOGIN_SUCCESS = "You have successfully logged in",
     LOGIN_ERROR = "Invalid username or password",
-    LOGOUT_SUCCESS = "Successfully signout"
+    LOGOUT_SUCCESS = "Successfully signout",
+    AUTH_ERROR = "Login before editing, please"
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

@@ -7,6 +7,7 @@ import {Redirect, RouteComponentProps, withRouter} from "react-router-dom"
 import {compose} from "redux"
 import {NOTIFICATION_MESSAGES, setNotificationMessageAC} from "../../redux/notification-reducer"
 import {statusCodeAsBoolean} from '../../helpers/statusCodeConverter'
+import {loadTokenFromLocalStorage} from "../../localStorage/localStorage";
 
 type PathParamsType = {
     taskId: string
@@ -43,9 +44,16 @@ const EditTask = (props: EditTaskPropsType) => {
 
 
     const onSubmit: SubmitHandler<EditTaskFormType> = () => {
-        // Add 'Mongolian Vowel Separator' ("᠎") at the line end (invisible symbol)
-        // to know whether the task was edited (this field is not provided by the backend API)
-        dispatch(editTasksTC(+props.match.params.taskId, taskDone, taskText + "᠎"))
+        const token = loadTokenFromLocalStorage()
+        if (token) {
+            // Add 'Mongolian Vowel Separator' ("᠎") at the line end (invisible symbol)
+            // to know whether the task was edited (this field is not provided by the backend API)
+            dispatch(editTasksTC(+props.match.params.taskId, taskDone, taskText + "᠎"))
+        } else {
+            dispatch(setNotificationMessageAC(NOTIFICATION_MESSAGES.AUTH_ERROR, "error"))
+            return <Redirect to="/login"/>
+        }
+
     }
 
 // Redirections

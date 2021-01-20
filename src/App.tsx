@@ -12,7 +12,7 @@ import {Tasks} from "./components/Tasks/Tasks"
 import {NewTask} from "./components/Task/NewTask"
 import {Login} from './components/Login/Login'
 import EditTask from './components/Task/EditTask'
-import { loadTokenFromLocalStorage } from './api/localStorage/localStorage'
+import { loadTokenFromLocalStorage } from './localStorage/localStorage'
 import {setUserTokenAC} from './redux/auth-reducer'
 
 toast.configure()

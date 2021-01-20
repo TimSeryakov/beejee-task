@@ -5,7 +5,7 @@
 import {ThunkDispatchType} from "./store";
 import {AUTH_API} from "../api/api";
 import {NOTIFICATION_MESSAGES, setNotificationMessageAC} from "./notification-reducer";
-import {saveTokenToLocalStorage} from "../api/localStorage/localStorage";
+import {saveTokenToLocalStorage} from "../localStorage/localStorage";
 
 export const initialState: AuthStateType = {
     isAuthorized: false,
