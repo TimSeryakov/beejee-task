@@ -14,7 +14,7 @@ import {Login} from './components/Login/Login'
 import EditTask from './components/Task/EditTask'
 import { loadTokenFromLocalStorage } from './localStorage/localStorage'
 import {setUserTokenAC} from './redux/auth-reducer'
-import {setCurrentUrlAC} from "./redux/app-reducer";
+import {setCurrentUrlAC} from "./redux/app-reducer"
 
 toast.configure()
 
@@ -23,11 +23,13 @@ export const App = () => {
     const location = useLocation()
     const dispatch = useDispatch()
 
+    // Check token in local storage
     useEffect(() => {
         const token = loadTokenFromLocalStorage()
         dispatch(setUserTokenAC(token))
     })
 
+    // Save current path to store
     useEffect(() => {
         dispatch(setCurrentUrlAC(location.pathname))
     }, [location, dispatch])
