@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {Redirect, Route, Switch} from 'react-router-dom'
+import {Redirect, Route, Switch, useLocation} from 'react-router-dom'
 import {Page404} from './components/Page404/Page404'
 import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
@@ -14,17 +14,23 @@ import {Login} from './components/Login/Login'
 import EditTask from './components/Task/EditTask'
 import { loadTokenFromLocalStorage } from './localStorage/localStorage'
 import {setUserTokenAC} from './redux/auth-reducer'
+import {setCurrentUrlAC} from "./redux/app-reducer";
 
 toast.configure()
 
 export const App = () => {
     const {notification} = useSelector((state: RootStateType) => state.notification)
+    const location = useLocation()
     const dispatch = useDispatch()
 
     useEffect(() => {
         const token = loadTokenFromLocalStorage()
         dispatch(setUserTokenAC(token))
     })
+
+    useEffect(() => {
+        dispatch(setCurrentUrlAC(location.pathname))
+    }, [location, dispatch])
 
     // Notifications toast maker
     useEffect(() => {
