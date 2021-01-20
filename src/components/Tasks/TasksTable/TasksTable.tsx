@@ -180,14 +180,14 @@ const Arrow = (props: { direction: SortDirectionType }) => {
             {
                 props.direction === "desc"
                     ? // ↑ (up) arrow means -asc- sort direction
-                    <svg className="w-6 h-6 inline mx-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    <svg className="w-6 h-6 inline ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                          xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                               d="M8 7l4-4m0 0l4 4m-4-4v18">
                         </path>
                     </svg>
                     : // ↓ (down) arrow means -asc- sort direction
-                    <svg className="w-6 h-6 inline mx-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    <svg className="w-6 h-6 inline ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                          xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                               d="M16 17l-4 4m0 0l-4-4m4 4V3">

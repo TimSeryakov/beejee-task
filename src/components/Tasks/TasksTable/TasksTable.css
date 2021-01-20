@@ -10,6 +10,12 @@ thead > tr > th:nth-child(1) {
   @apply w-7/12
 }
 
+
+tbody > tr > td:nth-child(2) {
+  @apply border-l border-r border-gb-text border-opacity-20
+}
+
+
 tbody > tr > td {
   @apply text-center
 }
@@ -31,14 +37,5 @@ tbody > tr:nth-child(odd) {
 }
 
 .restricted {
-  @apply break-words break-all
+  @apply break-words
 }
-
-/*Hides some cols on small screen size */
-/*thead > tr > th:nth-child(n+2):nth-child(-n+4) {*/
-/*  @apply hidden md:table-cell*/
-/*}*/
-
-/*tbody > tr > td:nth-child(n+2):nth-child(-n+4) {*/
-/*  @apply hidden md:table-cell*/
-/*}*/
