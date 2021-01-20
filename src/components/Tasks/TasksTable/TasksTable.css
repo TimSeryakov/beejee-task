@@ -15,6 +15,9 @@ tbody > tr > td:nth-child(2) {
   @apply border-l border-r border-gb-text border-opacity-20
 }
 
+tbody > tr > td:nth-child(3) {
+  @apply border-r border-gb-text border-opacity-20
+}
 
 tbody > tr > td {
   @apply text-center

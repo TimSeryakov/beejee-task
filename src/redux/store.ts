@@ -1,5 +1,4 @@
 import {applyMiddleware, combineReducers, createStore} from "redux"
-import logger from "redux-logger"
 import thunkMiddleware, {ThunkAction} from "redux-thunk"
 import appReducer, {AppActionTypes, AppStateType} from "./app-reducer"
 import tasksReducer, {TasksActionTypes, TasksStateType} from "./task-reducer"
@@ -28,6 +27,6 @@ const reducers = combineReducers({
     tasks: tasksReducer
 })
 
-const store = createStore(reducers, applyMiddleware(thunkMiddleware, logger))
+const store = createStore(reducers, applyMiddleware(thunkMiddleware/*, logger*/))
 
 export default store
