@@ -10,6 +10,6 @@ export const makeToast = (messageText: string, messageType: NotificationMessageT
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        progress: undefined,
+        progress: undefined
     })
 }
