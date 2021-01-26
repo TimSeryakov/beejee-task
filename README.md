@@ -32,8 +32,7 @@ https://uxcandy.com/~shapoval/test-task-backend/docs/v2.html
 
 По ссылке выше доступен протокол тестирования https://beejee.ru/coding-challenge-requirements-react
 
-
-
+---
 
 ### `yarn start`
 
